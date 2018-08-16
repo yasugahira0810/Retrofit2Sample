@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 public class ShowTagsActivity extends AppCompatActivity {
@@ -16,5 +17,6 @@ public class ShowTagsActivity extends AppCompatActivity {
         String message = intent.getStringExtra("message");
 
         TextView response = (TextView)findViewById(R.id.textView);
+        response.setText(message);
     }
 }
