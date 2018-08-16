@@ -6,13 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginBottom="207dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginLeft="124dp"
+        android:layout_marginRight="124dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="208dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_show_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="フォロータグ表示" />
+
+            <Button
+                android:id="@+id/button_post_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="新規記事投稿" />
+        </LinearLayout>
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
