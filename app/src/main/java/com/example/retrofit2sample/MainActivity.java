@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    String test = "";
+    ArrayList<String> followTags = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 int s = listTag.size();
                 for (int i = 0; i < s; i++) {
                     Log.d("debug3", listTag.get(i).getId());
-                    test = listTag.get(1).getId();
+                    followTags.add(listTag.get(i).getId());
                 }
             }
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClassName(getPackageName(), getPackageName() + ".ShowTagsActivity");
 
-                intent.putExtra("message", test);
+                intent.putStringArrayListExtra("followTags", followTags);
 
                 startActivity(intent);
             }

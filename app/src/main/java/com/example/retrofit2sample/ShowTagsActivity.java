@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ShowTagsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -14,9 +16,11 @@ public class ShowTagsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_tags);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra("message");
+        ArrayList<String> followTags = intent.getStringArrayListExtra("followTags");
+
+        String followTagString = String.valueOf(followTags);
 
         TextView response = (TextView)findViewById(R.id.textView);
-        response.setText(message);
+        response.setText(followTagString);
     }
 }
