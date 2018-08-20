@@ -6,18 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-public class PostArticleActivity extends AppCompatActivity {
+public class PostCommentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_article);
+        setContentView(R.layout.activity_post_comment);
 
         Intent intent = getIntent();
-        String responseArticle = intent.getStringExtra("responseArticle");
+        String responseComment = intent.getStringExtra("responseComment");
 
-        TextView response = (TextView)findViewById(R.id.textView);
-        response.setText(responseArticle);
+        TextView response = (TextView)findViewById(R.id.textView3);
+        response.setText(responseComment);
     }
 }

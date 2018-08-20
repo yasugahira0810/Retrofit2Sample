@@ -37,6 +37,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="新規記事投稿" />
+
+            <Button
+                android:id="@+id/button_post_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="コメント投稿" />
         </LinearLayout>
 
     </LinearLayout>
