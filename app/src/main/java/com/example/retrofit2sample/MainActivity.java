@@ -1,11 +1,14 @@
 package com.example.retrofit2sample;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.retrofit2sample.model.Article;
 import com.example.retrofit2sample.model.Comment;
@@ -33,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 画面項目定義
     ArrayList<String> followTags = new ArrayList<String>();
 
     @Override
@@ -47,18 +51,20 @@ public class MainActivity extends AppCompatActivity {
 
         // フォロータグ表示処理
         Button bt_showTags = (Button) findViewById(R.id.button_show_tags);
-
         bt_showTags.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 TagService service = retrofit.create(TagService.class);
 
-                Call<List<Tag>> tags = service.ListTags();
+                EditText input_id = (EditText) findViewById(R.id.input_id);
+                Log.d("debug********", input_id.getText().toString());
+                Call<List<Tag>> tags = service.ListTags(input_id.getText().toString());
 
                 tags.enqueue(new Callback<List<Tag>>() {
                     @Override
                     public void onResponse(Call<List<Tag>> call, Response<List<Tag>> response) {
+                        followTags.clear();
                         List<Tag> listTag = response.body();
                         int s = listTag.size();
                         for (int i = 0; i < s; i++) {
@@ -86,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 新規記事投稿
         Button bt_postArticle = (Button) findViewById(R.id.button_post_article);
-
         bt_postArticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
         // コメント投稿
         Button bt_postComment = (Button) findViewById(R.id.button_post_comment);
-
         bt_postComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,4 +206,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    // ID保存
+    @Override
+    protected void onPause() {
+
+        EditText input_id = (EditText) findViewById(R.id.input_id);
+        SharedPreferences pref = getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+        editor.putString("id", input_id.getText().toString());
+        editor.commit();
+
+        super.onPause();
+    }
+
+    // ID復元
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        EditText input_id = (EditText) findViewById(R.id.input_id);
+        SharedPreferences pref = getSharedPreferences("user_id", Context.MODE_PRIVATE);
+        input_id.setText(pref.getString("id", ""));
+    }
+
+
 }
