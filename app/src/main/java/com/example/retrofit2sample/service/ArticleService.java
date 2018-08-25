@@ -1,6 +1,7 @@
 package com.example.retrofit2sample.service;
 
-import com.example.retrofit2sample.model.Article;
+import com.example.retrofit2sample.model.RequestArticle;
+import com.example.retrofit2sample.model.ResponseArticle;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -13,5 +14,5 @@ public interface ArticleService {
             "Content-Type: application/json"
     })
     @POST("/api/v2/items")
-    Call<Article> PostArticle(@Body Article article);
+    Call<ResponseArticle> PostArticle(@Body RequestArticle requestArticle);
 }
