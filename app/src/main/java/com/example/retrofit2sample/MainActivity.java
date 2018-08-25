@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.retrofit2sample.model.Article;
+import com.example.retrofit2sample.model.PostTag;
+import com.example.retrofit2sample.model.RequestArticle;
 import com.example.retrofit2sample.model.Comment;
+import com.example.retrofit2sample.model.ResponseArticle;
 import com.example.retrofit2sample.model.Tag;
 import com.example.retrofit2sample.service.ArticleService;
 import com.example.retrofit2sample.service.CommentService;
@@ -20,11 +22,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,34 +88,33 @@ public class MainActivity extends AppCompatActivity {
         Button bt_postArticle = (Button) findViewById(R.id.button_post_article);
 
         bt_postArticle.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
-                Gson gson = new Gson();
-                //List list = gson.fromJson("[{\"name\":\"Ruby\"}]", List.class);
-
-                Article postArticle = new Article("Example", false, false,
-                        "dev", "Example title", false);
-
-                // https://teratail.com/questions/816
-                Log.d("debug0.3", ToStringBuilder.reflectionToString(postArticle, ToStringStyle.DEFAULT_STYLE));
-
                 ArticleService service = retrofit.create(ArticleService.class);
 
-                Call<Article> article = service.PostArticle(postArticle);
+                List<String> versions = Arrays.asList("0.0.1", "0.0.2");
+                PostTag tagRuby = new PostTag("Ruby", versions);
+                PostTag tagPython = new PostTag("Python", versions);
+                List<PostTag> listTags = Arrays.asList(tagRuby, tagPython);
+                RequestArticle postArticle = new RequestArticle("# Example", false,
+                        false, "dev", true, listTags, "GINTAMA2", false);
+
+                Call<ResponseArticle> article = service.PostArticle(postArticle);
 
                 Log.d("debug0.4", ToStringBuilder.reflectionToString(service, ToStringStyle.DEFAULT_STYLE));
                 Log.d("debug0.5", ToStringBuilder.reflectionToString(article, ToStringStyle.DEFAULT_STYLE));
 
-                article.enqueue(new Callback<Article>() {
+                article.enqueue(new Callback<ResponseArticle>() {
                     @Override
-                    public void onResponse(Call<Article> call, Response<Article> response) {
+                    public void onResponse(Call<ResponseArticle> call, Response<ResponseArticle> response) {
                         if (response.isSuccessful()) {
 
                             Log.d("debug1", ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug2", ToStringBuilder.reflectionToString(response.errorBody(), ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug3", String.valueOf(response.body()));
-                            String responseArticle = String.valueOf(response.body());
+                            ResponseArticle responseArticle = response.body();
                             Intent intent = new Intent();
                             intent.setClassName(getPackageName(), getPackageName() + ".PostArticleActivity");
                             intent.putExtra("responseArticle", responseArticle);
@@ -129,35 +128,30 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("debug111", ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug112", ToStringBuilder.reflectionToString(response.errorBody(), ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug113", String.valueOf(response.body()));
+
                         } else {
                             Log.d("debug113", "FATAL!!!!");
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Article> call, Throwable t) {
+                    public void onFailure(Call<ResponseArticle> call, Throwable t) {
                         Log.d("debug4", t.getMessage());
                     }
                 });
             }
+
         });
 
-        // コメント投稿
+        // 新規コメント投稿
         Button bt_postComment = (Button) findViewById(R.id.button_post_comment);
 
         bt_postComment.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
                 CommentService service = retrofit.create(CommentService.class);
-
-//                HashMap<String, String> hashMap = new HashMap<>();
-//                hashMap.put("body", "This is Test");
-//                Gson gson = new Gson();
-//                String json = gson.toJson(hashMap);
-//                Map<String, String> hashMap = new HashMap<>();
-//                hashMap.put("body", "This is test");
-//                Log.d("debug0.4", String.valueOf(hashMap));
 
                 Comment cmnt = new Comment("This is test message");
                 Call<Comment> comment = service.PostComment(cmnt);
@@ -168,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 comment.enqueue(new Callback<Comment>() {
                     @Override
                     public void onResponse(Call<Comment> call, Response<Comment> response) {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
 
                             Log.d("debug1", ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug2", ToStringBuilder.reflectionToString(response.errorBody(), ToStringStyle.DEFAULT_STYLE));

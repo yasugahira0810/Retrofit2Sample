@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
+
+import com.example.retrofit2sample.model.ResponseArticle;
 
 import java.util.ArrayList;
 
@@ -15,9 +18,14 @@ public class PostArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_article);
 
         Intent intent = getIntent();
-        String responseArticle = intent.getStringExtra("responseArticle");
+        ResponseArticle responseArticle = (ResponseArticle)intent.getSerializableExtra("responseArticle");
 
-        TextView response = (TextView)findViewById(R.id.textView);
-        response.setText(responseArticle);
+        if ( responseArticle == null) {
+            Log.d("DEBUGGGGGGG", "damedaaaa");
+        } else {
+            Log.d("DEBUGGGGGGG", responseArticle.getUrl());
+            TextView response = (TextView) findViewById(R.id.textView2);
+            response.setText(responseArticle.getTitle());
+        }
     }
 }
