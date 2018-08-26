@@ -91,54 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                ArticleService service = retrofit.create(ArticleService.class);
-
-                List<String> versions = Arrays.asList("0.0.1", "0.0.2");
-                PostTag tagRuby = new PostTag("Ruby", versions);
-                PostTag tagPython = new PostTag("Python", versions);
-                List<PostTag> listTags = Arrays.asList(tagRuby, tagPython);
-                RequestArticle postArticle = new RequestArticle("# Example", false,
-                        false, "dev", true, listTags, "GINTAMA2", false);
-
-                Call<ResponseArticle> article = service.PostArticle(postArticle);
-
-                Log.d("debug0.4", ToStringBuilder.reflectionToString(service, ToStringStyle.DEFAULT_STYLE));
-                Log.d("debug0.5", ToStringBuilder.reflectionToString(article, ToStringStyle.DEFAULT_STYLE));
-
-                article.enqueue(new Callback<ResponseArticle>() {
-                    @Override
-                    public void onResponse(Call<ResponseArticle> call, Response<ResponseArticle> response) {
-                        if (response.isSuccessful()) {
-
-                            Log.d("debug1", ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
-                            Log.d("debug2", ToStringBuilder.reflectionToString(response.errorBody(), ToStringStyle.DEFAULT_STYLE));
-                            Log.d("debug3", String.valueOf(response.body()));
-                            ResponseArticle responseArticle = response.body();
-                            Intent intent = new Intent();
-                            intent.setClassName(getPackageName(), getPackageName() + ".PostArticleActivity");
-                            intent.putExtra("responseArticle", responseArticle);
-                            startActivity(intent);
-                        } else if (response.code() == 400) {
-                            try {
-                                Log.d("debug110", response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Log.d("debug111", ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
-                            Log.d("debug112", ToStringBuilder.reflectionToString(response.errorBody(), ToStringStyle.DEFAULT_STYLE));
-                            Log.d("debug113", String.valueOf(response.body()));
-
-                        } else {
-                            Log.d("debug113", "FATAL!!!!");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseArticle> call, Throwable t) {
-                        Log.d("debug4", t.getMessage());
-                    }
-                });
+                Intent intent = new Intent();
+                intent.setClassName(getPackageName(), getPackageName() + ".PostArticleActivity");
+                startActivity(intent);
             }
 
         });
@@ -181,9 +136,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("debug111", ToStringBuilder.reflectionToString(response, ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug112", ToStringBuilder.reflectionToString(response.errorBody(), ToStringStyle.DEFAULT_STYLE));
                             Log.d("debug113", String.valueOf(response.body()));
-
-                        } else {
-                            Log.d("debug113", "FATAL!!!!");
                         }
                     }
 
