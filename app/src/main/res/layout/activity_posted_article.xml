@@ -10,6 +10,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,14 +29,12 @@
                 android:layout_weight="1"
                 android:text="タイトル" />
 
-            <EditText
+            <TextView
                 android:id="@+id/title_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="TEST" />
+                android:text="TextView" />
 
         </LinearLayout>
 
@@ -46,20 +51,13 @@
                 android:layout_weight="1"
                 android:text="本文" />
 
-            <EditText
+            <TextView
                 android:id="@+id/body_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="TEST" />
+                android:text="TextView" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button_post_article"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="投稿" />
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".ShowTagsActivity"></activity>
         <activity android:name=".PostArticleActivity"></activity>
+        <activity android:name=".PostedArticleActivity"></activity>
         <activity android:name=".PostCommentActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
