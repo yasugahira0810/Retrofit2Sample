@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 画面項目定義
     ArrayList<String> followTags = new ArrayList<String>();
+    ArrayList<String> followTags2 = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +57,50 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 TagService service = retrofit.create(TagService.class);
+                TagService service2 = retrofit.create(TagService.class);
 
                 EditText input_id = (EditText) findViewById(R.id.input_id);
                 Log.d("debug********", input_id.getText().toString());
-                Call<List<Tag>> tags = service.ListTags(input_id.getText().toString());
+                final Call<List<Tag>> tags = service.ListTags(input_id.getText().toString());
+                final Call<List<Tag>> tags2 = service2.ListTags("yasugahira0810");
 
                 tags.enqueue(new Callback<List<Tag>>() {
                     @Override
                     public void onResponse(Call<List<Tag>> call, Response<List<Tag>> response) {
                         followTags.clear();
-                        List<Tag> listTag = response.body();
+                        final List<Tag> listTag = response.body();
                         int s = listTag.size();
                         for (int i = 0; i < s; i++) {
                             Log.d("debug3", listTag.get(i).getId());
                             followTags.add(listTag.get(i).getId());
                         }
 
-                        Intent intent = new Intent();
+                        final Intent intent = new Intent();
                         intent.setClassName(getPackageName(), getPackageName() + ".ShowTagsActivity");
 
                         intent.putStringArrayListExtra("followTags", followTags);
 
-                        startActivity(intent);
+                        tags2.enqueue(new Callback<List<Tag>>() {
+                            @Override
+                            public void onResponse(Call<List<Tag>> call, Response<List<Tag>> response) {
+                                followTags2.clear();
+                                List<Tag> listTag2 = response.body();
+                                int s = listTag2.size();
+                                for (int i = 0; i < s; i++) {
+                                    Log.d("debug44", listTag2.get(i).getId());
+                                    followTags2.add(listTag2.get(i).getId());
+                                }
+
+                                intent.putStringArrayListExtra("followTags2", followTags2);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Tag>> call, Throwable t) {
+                                Log.d("debug444", t.getMessage());
+                            }
+                        });
+
                     }
 
                     @Override
