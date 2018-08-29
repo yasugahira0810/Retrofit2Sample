@@ -20,8 +20,10 @@ public class ShowTagsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         ArrayList<String> followTags = intent.getStringArrayListExtra("followTags");
+        ArrayList<String> followTags2 = intent.getStringArrayListExtra("followTags2");
 
-        Log.d("THISISDEBUG", String.valueOf(followTags.size()));
+        Log.d("THISISDEBUG1", String.valueOf(followTags.size()));
+        Log.d("THISISDEBUG2", String.valueOf(followTags2.size()));
         String followTagString = String.valueOf(followTags);
 
         // TableLayoutのグループを取得
@@ -35,7 +37,8 @@ public class ShowTagsActivity extends AppCompatActivity {
             ((TextView)(tr.getChildAt(0))).setText(followTags.get(i));
         }
 
-        TextView response = (TextView)findViewById(R.id.textView);
-        response.setText(followTagString);
+        String followTag2String = String.valueOf(followTags2);
+        TextView response2 = (TextView)findViewById(R.id.textView);
+        response2.setText(followTag2String);
     }
 }
